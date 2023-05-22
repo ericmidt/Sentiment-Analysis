@@ -1,2 +1,2 @@
-# Twitter Sentiment Analysis Project
-The project involves collecting real-time tweets, performing sentiment analysis to determine the sentiment of each tweet, and visualizing the results in an interactive dashboard. The system will utilize AWS for data storage and processing, Apache Spark for sentiment analysis, Python for data processing and visualization, and SQL for data retrieval and analysis.
+# Sentiment Analysis Project
+The project involves collecting real-time reddit posts and comments, performing sentiment analysis to determine the sentiment, and visualizing the results in an interactive dashboard. The system will utilize AWS for data storage and processing, Apache Spark for sentiment analysis, Python for data processing and visualization, and SQL for data retrieval and analysis.
