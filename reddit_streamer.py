@@ -47,14 +47,11 @@ keyword = "python"
 for subreddit_name in subreddit_names:
     subreddit = reddit.subreddit(subreddit_name)
     posts = subreddit.search(keyword, sort="new", limit=post_limit)
-
     data_list = []
-
     # Filter for certain keywords in the title and read the first comment tree
     for post in posts:
         if keyword in post.title:
             title = post.title
-            print(title)
             post.comments.replace_more(limit=comment_tree_limit)
             comment_tree = post.comments.list()[:comment_tree_limit]  # Read limited comment trees
             comment_data = []
