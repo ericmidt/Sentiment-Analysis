@@ -8,5 +8,5 @@ app_id = os.environ.get("reddit_app_id")
 app_secret = os.environ.get("reddit_app_secret")
 app_platform = os.environ.get("reddit_app_platform")
 reddit_username = os.environ.get("reddit_username")
-
+reddit_password = os.environ.get("reddit_pw")
 USER_AGENT = "windows:" + f"localhost:{app_name}:v1 (by /u/" + reddit_username + ")"

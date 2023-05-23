@@ -1,6 +1,5 @@
 import praw
 import json
-
 import reddit_credentials
 
 
@@ -9,40 +8,55 @@ app_id = reddit_credentials.app_id
 app_secret = reddit_credentials.app_secret
 app_platform = reddit_credentials.app_platform
 reddit_username = reddit_credentials.reddit_username
+reddit_pw = reddit_credentials.reddit_password
 USER_AGENT = reddit_credentials.USER_AGENT
 
 # Create the Reddit instance
 reddit = praw.Reddit(client_id=app_id,
                      client_secret=app_secret,
-                     user_agent=USER_AGENT)
+                     user_agent=USER_AGENT,
+                     username=reddit_username,
+                     password=reddit_pw)
 
 
 # Define the list of subreddit names
-subreddit_names = ['CryptoMarkets', 'CryptoCurrency', 'Altcoin']
 
+# Allows test with only one subreddit
+""" subreddit_names = ["careerguidance"] """
+
+# Subreddits that will be used in the search
+subreddit_names = ["careerguidance", 
+                    "programming",
+                    "learnprogramming",
+                    "cscareerquestions",
+                    "careerguidance",
+                    "dailyprogrammer",
+                    "coding",
+                    "computerscience",
+                    "SoftwareEngineering"
+                    ]
 
 #Define post, comment and comment tree limits
-post_limit = 100  # Number of posts to retrieve
+post_limit = 300  # Number of posts to retrieve
 comment_limit = 10  # Number of comments per post
 comment_tree_limit = 5  # Number of comment trees per post
 
 data_dict = {}
-
+keyword = "python"
 # Fetch subreddit data for multiple subreddits
 for subreddit_name in subreddit_names:
     subreddit = reddit.subreddit(subreddit_name)
-    posts = subreddit.new(limit=post_limit)
+    posts = subreddit.search(keyword, sort="new", limit=post_limit)
 
     data_list = []
 
     # Filter for certain keywords in the title and read the first comment tree
     for post in posts:
-        title = post.title
-        if 'bitcoin' in title or 'crypto' in title or 'trading' in title or 'bot' in title or 'tether' in title or 'bnb' in title or 'dogecoin' in title:
+        if keyword in post.title:
+            title = post.title
+            print(title)
             post.comments.replace_more(limit=comment_tree_limit)
             comment_tree = post.comments.list()[:comment_tree_limit]  # Read limited comment trees
-
-
             comment_data = []
             for comment in comment_tree:
                 comment_data.append(comment.body)
@@ -58,8 +72,8 @@ for subreddit_name in subreddit_names:
                 'title': title,
                 'comments': comment_data,
             })
-        
-    data_dict[subreddit_name] = data_list
+            
+        data_dict[subreddit_name] = data_list
             
 
 for subreddit_name, data_list in data_dict.items():
