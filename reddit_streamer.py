@@ -56,26 +56,25 @@ for subreddit_name in subreddit_names:
             comment_tree = post.comments.list()[:comment_tree_limit]  # Read limited comment trees
             comment_data = []
             for comment in comment_tree:
-                comment_data.append(comment.body)
-
-                if len(comment.replies) > 0:
-                        reply_data = []
-                        for reply in comment.replies[:comment_limit]:
-                            reply_data.append(reply.body)
-                        comment_data.append(reply_data)
-
+                # Only adds comment if it has the keyword
+                if keyword in comment.body:
+                    comment_data.append(comment.body)
+                    if len(comment.replies) > 0:
+                            reply_data = []
+                            for reply in comment.replies[:comment_limit]:
+                                # Only adds reply if it has the keyword
+                                if keyword in reply_data:
+                                    reply_data.append(reply.body)
+                            comment_data.append(reply_data)
             data_list.append({
                 'subreddit': subreddit_name,
                 'title': title,
                 'comments': comment_data,
             })
-            
         data_dict[subreddit_name] = data_list
-            
 
-for subreddit_name, data_list in data_dict.items():
-    filename = f'{subreddit_name}_data.json'
-    with open(filename, 'w') as json_file:
-        json.dump(data_list, json_file, indent=4)  # Pretty print with indent=4
+filename = 'reddit_data.json'
+with open(filename, 'w') as json_file:
+    json.dump(data_dict, json_file, indent=4)  # Pretty print with indent=4
+print(f"Data saved as {filename}") 
 
-    print(f"Data for {subreddit_name} saved as {filename}")
