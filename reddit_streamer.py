@@ -1,6 +1,7 @@
 import praw
 import json
 import reddit_credentials
+import boto3
 
 
 app_name = reddit_credentials.app_name
@@ -10,6 +11,7 @@ app_platform = reddit_credentials.app_platform
 reddit_username = reddit_credentials.reddit_username
 reddit_pw = reddit_credentials.reddit_password
 USER_AGENT = reddit_credentials.USER_AGENT
+s3_bucket_name = reddit_credentials.s3_bucket
 
 # Create the Reddit instance
 reddit = praw.Reddit(client_id=app_id,
@@ -17,9 +19,6 @@ reddit = praw.Reddit(client_id=app_id,
                      user_agent=USER_AGENT,
                      username=reddit_username,
                      password=reddit_pw)
-
-
-# Define the list of subreddit names
 
 # Allows test with only one subreddit
 """ subreddit_names = ["careerguidance"] """
@@ -78,3 +77,9 @@ with open(filename, 'w') as json_file:
     json.dump(data_dict, json_file, indent=4)  # Pretty print with indent=4
 print(f"Data saved as {filename}") 
 
+# Create an S3 client
+s3_client = boto3.client('s3')
+
+# Upload the JSON file to S3
+with open(filename, 'rb') as file:
+    s3_client.put_object(Body=filename, Bucket=s3_bucket_name, Key='redditrawdata.json')
