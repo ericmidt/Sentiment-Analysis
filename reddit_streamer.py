@@ -51,6 +51,7 @@ for subreddit_name in subreddit_names:
     for post in posts:
         if keyword in post.title:
             title = post.title
+            post_text = post.selftext
             post.comments.replace_more(limit=comment_tree_limit)
             comment_tree = post.comments.list()[:comment_tree_limit]  # Read limited comment trees
             comment_data = []
@@ -63,8 +64,8 @@ for subreddit_name in subreddit_names:
                             reply_data = [reply.body for reply in comment.replies[:comment_limit] if keyword in reply_data]
                             comment_data.append(reply_data)
             data_list.append({
-                'subreddit': subreddit_name,
                 'title': title,
+                'post_text': post_text,
                 'comments': comment_data,
             })
         data_dict[subreddit_name] = data_list
