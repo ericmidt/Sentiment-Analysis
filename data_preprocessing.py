@@ -13,7 +13,6 @@ os.system('cls')
 with open('reddit_data.json') as json_file:
     raw_data = json.load(json_file)
 
-raw_data_posts = []
 raw_data_posts = [raw_data[subreddit] for subreddit in raw_data]
 
 # Removes subreddits and create list of posts
@@ -32,15 +31,20 @@ for dict in list_of_dicts:
             list_of_posts.append(comment)
 
 # Removes all non-alphabetical characters except spaces
-regex = re.compile('[^a-zA-Z ]')
-alphabetic_only_list = []
-for string in list_of_posts:
-    alphabetic_only_list.append(regex.sub('', string))
+def clean_text(text):
+    text = re.sub(r'@[A-Za-z0–9]+', '', text) #Remove @mentions replace with blank
+    text = re.sub(r'RT[\s]+', '', text) #Removing RT, replace with blank
+    text = re.sub(r'https?:\/\/\S+', '', text) #Remove the hyperlinks
+    text = re.sub(r'[^a-zA-Z áóíãé]', '', text) # Remove anything that's not alpha
+    text = text.lower()
+    return text
 
-lower_case_list = [string.lower() for string in alphabetic_only_list]
+clean_text_list = []
+for string in list_of_posts:
+    clean_text_list.append(cleanTxt(string))
 
 # Create dataframe to better access data
-dataframe = pd.DataFrame(lower_case_list, columns=['posts'])
+dataframe = pd.DataFrame(clean_text_list, columns=['posts'])
 # Add sentiment column. 0: neutral, 1: positive, -1: negative
 dataframe['sentiment'] = 0
 dataframe.to_csv('posts_dataframe.csv')
