@@ -1,11 +1,31 @@
 import json
 from nltk.corpus import stopwords
+import os
+import pandas as pd
+
+# Clear screen to make testing the code easier
+os.system('cls')
 
 # import reddit_streamer
 # raw_data = reddit_streamer.reddit_raw_data
 
 with open('reddit_data.json') as json_file:
     raw_data = json.load(json_file)
+
+raw_data_posts = []
+raw_data_posts = [raw_data[subreddit] for subreddit in raw_data]
+
+# Remove subreddits and create list of posts
+list_of_posts = []
+for subreddit in raw_data_posts:
+    for _ in range(0, len(subreddit)):
+        list_of_posts.append((subreddit[_]))
+
+# Create dataframe to better access data
+dataframe = pd.json_normalize(list_of_posts)
+# Add sentiment column. 0: neutral, 1: positive, -1: negative
+dataframe['sentiment'] = 0
+dataframe.to_csv('posts_dataframe.csv')
 
 # Convert the JSON data to a string
 raw_data_string = json.dumps(raw_data)

@@ -64,8 +64,7 @@ for subreddit_name in subreddit_names:
                             reply_data = [reply.body for reply in comment.replies[:comment_limit] if keyword in reply_data]
                             comment_data.append(reply_data)
             data_list.append({
-                'title': title,
-                'post_text': post_text,
+                'title_and_post': title + " " + post_text,
                 'comments': comment_data,
             })
         data_dict[subreddit_name] = data_list
@@ -78,21 +77,18 @@ print(f"Data saved as {filename}")
 # Create an S3 client
 s3_client = boto3.client('s3')
 
+# Specify the file key
+file_key = 'redditrawdata.json'
+
 # Upload the JSON file to S3
 with open(filename, 'rb') as file:
-    s3_client.put_object(Body=file, Bucket=s3_bucket_name, Key='redditrawdata.json')
-
+    s3_client.put_object(Body=file, Bucket=s3_bucket_name, Key=file_key)
 
 # Downloads file
 """ s3_client.download_file('rawredditdata', 'redditrawdata.json', 'redditrawdata.json') """
 
-# Specify the bucket name and file key
-bucket_name = 'rawredditdata'
-file_key = 'redditrawdata.json'
-
 # Retrieve the file object
-response = s3_client.get_object(Bucket=bucket_name, Key=file_key)
+response = s3_client.get_object(Bucket=s3_bucket_name, Key=file_key)
 
 # Read the content of the file
 reddit_raw_data = response['Body'].read().decode('utf-8')
-
