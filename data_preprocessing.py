@@ -3,6 +3,7 @@ from nltk.corpus import stopwords
 import os
 import pandas as pd
 
+
 # Clear screen to make testing the code easier
 os.system('cls')
 
@@ -11,6 +12,7 @@ os.system('cls')
 
 with open('reddit_data.json') as json_file:
     raw_data = json.load(json_file)
+    print('ok')
 
 raw_data_posts = []
 raw_data_posts = [raw_data[subreddit] for subreddit in raw_data]
