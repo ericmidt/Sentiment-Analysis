@@ -39,26 +39,17 @@ alphabetic_only_list = []
 for string in list_of_posts:
     alphabetic_only_list.append(regex.sub('', string))
 
+lower_case_list = [string.lower() for string in alphabetic_only_list]
+
 # Create dataframe to better access data
-dataframe = pd.DataFrame(alphabetic_only_list, columns=['posts'])
+dataframe = pd.DataFrame(lower_case_list, columns=['posts'])
 # Add sentiment column. 0: neutral, 1: positive, -1: negative
 dataframe['sentiment'] = 0
 dataframe.to_csv('posts_dataframe.csv')
 
-##### Redo next lines
-# Convert the JSON data to a string
-# raw_data_string = json.dumps(raw_data)
-
 # Separate string into a list of words
 # words = raw_data_string.split()
-
-# Remove non alphabetic characters
-# alphabetic_only = [word for word in words if word.isalpha()]
-
-# Convert all words to lower case
-# lower_only = [word.lower() for word in alphabetic_only]
 
 # Get rid of stopwords
 # stopwords_nltk = set(stopwords.words('english'))
 # cleaned_words = [word for word in lower_only if word not in stopwords_nltk]
- 
