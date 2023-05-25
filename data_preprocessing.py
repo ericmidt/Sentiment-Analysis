@@ -3,7 +3,7 @@ from nltk.corpus import stopwords
 import os
 import pandas as pd
 import re
-
+import pol_sub
 
 # Clear screen to make testing the code easier
 os.system('cls')
@@ -45,10 +45,29 @@ clean_text_list = []
 for string in list_of_posts:
     clean_text_list.append(clean_text(string))
 
+sub = []
+pol = []
+for string in clean_text_list:
+    pol.append(pol_sub.getPolarity(string))
+
+for string in clean_text_list:
+    sub.append(pol_sub.getSubjectivity(string))
+
+
+dataframe = pd.DataFrame({
+    'Posts': list_of_posts,
+    'Sentiment': pol,
+    'Subjectivity': sub
+})
+dataframe.index.name = 'Index'
+
 # Create dataframe to better access data
-dataframe = pd.DataFrame(clean_text_list, columns=['posts'])
+'''dataframe = pd.DataFrame(clean_text_list, columns=['posts'])
+dataframe = pd.DataFrame(pol, columns=['polarity'])
+dataframe = pd.DataFrame(sub, columns=['subjectivity'])
+'''
 # Add sentiment column. 0: neutral, 1: positive, -1: negative
-dataframe['sentiment'] = 0
+#dataframe['sentiment'] = 0
 dataframe.to_csv('posts_dataframe.csv')
 
 # Separate string into a list of words

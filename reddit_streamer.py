@@ -45,7 +45,7 @@ keyword = "python"
 # Fetch subreddit data for multiple subreddits
 for subreddit_name in subreddit_names:
     subreddit = reddit.subreddit(subreddit_name)
-    posts = subreddit.search(keyword, sort="new", limit=post_limit)
+    posts = subreddit.search(keyword, sort="best", limit=post_limit)
     data_list = []
     # Filter for certain keywords in the title and read the first comment tree
     for post in posts:
