@@ -15,18 +15,28 @@ with open('reddit_data.json') as json_file:
 raw_data_posts = []
 raw_data_posts = [raw_data[subreddit] for subreddit in raw_data]
 
-# Remove subreddits and create list of posts
-list_of_posts = []
+# Removes subreddits and create list of posts
+list_of_dicts = []
 for subreddit in raw_data_posts:
     for _ in range(0, len(subreddit)):
-        list_of_posts.append((subreddit[_]))
+        list_of_dicts.append((subreddit[_]))
+
+# Removes all distinction between submission and comment, creates a list of all available strings
+list_of_posts = []
+for dict in list_of_dicts:
+    list_of_posts.append(dict['title_and_post'])
+    for comment in dict['comments']:
+        # filters empty comments from new list
+        if type(comment) == str:
+            list_of_posts.append(comment)
 
 # Create dataframe to better access data
-dataframe = pd.json_normalize(list_of_posts)
+dataframe = pd.DataFrame(list_of_posts, columns=['posts'])
 # Add sentiment column. 0: neutral, 1: positive, -1: negative
 dataframe['sentiment'] = 0
 dataframe.to_csv('posts_dataframe.csv')
 
+##### Redo next lines
 # Convert the JSON data to a string
 raw_data_string = json.dumps(raw_data)
 
