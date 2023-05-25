@@ -13,7 +13,6 @@ os.system('cls')
 
 with open('reddit_data.json') as json_file:
     raw_data = json.load(json_file)
-    print('ok')
 
 raw_data_posts = [raw_data[subreddit] for subreddit in raw_data]
 
