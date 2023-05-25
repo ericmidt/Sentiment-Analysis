@@ -41,7 +41,7 @@ def clean_text(text):
 
 clean_text_list = []
 for string in list_of_posts:
-    clean_text_list.append(cleanTxt(string))
+    clean_text_list.append(clean_text(string))
 
 # Create dataframe to better access data
 dataframe = pd.DataFrame(clean_text_list, columns=['posts'])
