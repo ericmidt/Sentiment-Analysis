@@ -53,19 +53,14 @@ for string in clean_text_list:
 for string in clean_text_list:
     sub.append(pol_sub.getSubjectivity(string))
 
-
+# Create dataframe to better access data
 dataframe = pd.DataFrame({
     'Posts': list_of_posts,
-    'Sentiment': pol,
+    'Polarity': pol,
     'Subjectivity': sub
 })
 dataframe.index.name = 'Index'
 
-# Create dataframe to better access data
-'''dataframe = pd.DataFrame(clean_text_list, columns=['posts'])
-dataframe = pd.DataFrame(pol, columns=['polarity'])
-dataframe = pd.DataFrame(sub, columns=['subjectivity'])
-'''
 # Add sentiment column. 0: neutral, 1: positive, -1: negative
 #dataframe['sentiment'] = 0
 dataframe.to_csv('posts_dataframe.csv')
