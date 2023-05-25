@@ -1,5 +1,4 @@
 import json
-from nltk.corpus import stopwords
 import os
 import pandas as pd
 import re
@@ -26,10 +25,10 @@ list_of_posts = [dict['title_and_post'] for dict in list_of_dicts
         
         # Removes all non-alphabetical characters except spaces
 def clean_text(text):
-    text = re.sub(r'@[A-Za-z0–9]+', '', text) #Remove @mentions replace with blank
-    text = re.sub(r'RT[\s]+', '', text) #Removing RT, replace with blank
-    text = re.sub(r'https?:\/\/\S+', '', text) #Remove the hyperlinks
-    text = re.sub(r'[^a-zA-Z áóíãé]', '', text) # Remove anything that's not alpha
+    text = re.sub(r"@[A-Za-z0–9]+", "", text) #Remove @mentions replace with blank
+    text = re.sub(r"RT[\s]+", '', text) #Removing RT, replace with blank
+    text = re.sub(r"https?:\/\/\S+", "", text) #Remove the hyperlinks
+    text = re.sub(r"[^a-zA-Z áóíãé']", "", text) # Remove anything that's not alpha
     text = text.lower()
     return text
 
