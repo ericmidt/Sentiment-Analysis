@@ -6,13 +6,15 @@ import data_preprocessing
 
 # Cancel warning in streamlit
 st.set_option('deprecation.showPyplotGlobalUse', False)
+st.set_page_config(page_title="Reddit Sentiment Analysis")
 st.title("Reddit Data Sentiment Analysis")
 # Create sidebar
 st.sidebar.header("Options")
 st.sidebar.text("Click one of the buttons to generate:")
 
+
 def generate_wordcloud(data, stopwords_list):
-    wordcloud = WordCloud(width=800, height=400, background_color='black', max_words=100, stopwords=stopwords_list).generate(data)
+    wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=100, stopwords=stopwords_list).generate(data)
     st.title("Word Cloud")
     plt.figure(figsize=(10, 5))
     plt.imshow(wordcloud, interpolation='bilinear')
