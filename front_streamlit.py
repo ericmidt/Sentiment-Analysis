@@ -35,14 +35,9 @@ def generate_dataframe(data):
     st.pyplot()
 
 stopwords = STOPWORDS
-stopwords.add("ive")
-stopwords.add("will")
-stopwords.add("def")
-stopwords.add("return")
-stopwords.add("python")
-stopwords.add("dont")
-stopwords.add("u")
-stopwords.add("f")
+additional_stopwords = ["ive", "will", "def", "return", "python", "dont", "u", "f"]
+stopwords = list(stopwords) + additional_stopwords
+
 # Assuming you have a DataFrame named 'df' with a column named 'text'
 df = pd.read_csv('posts_dataframe.csv')
 # Solve duplicate column bug
