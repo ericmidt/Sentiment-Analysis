@@ -1,0 +1,8 @@
+pandas
+streamlit
+wordcloud
+matplotlib.pyplot
+textblob
+dotenv
+praw
+boto3
