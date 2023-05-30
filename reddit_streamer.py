@@ -4,14 +4,14 @@ import reddit_credentials
 import boto3
 
 
-app_name = reddit_credentials.app_name
-app_id = reddit_credentials.app_id
-app_secret = reddit_credentials.app_secret
-app_platform = reddit_credentials.app_platform
-reddit_username = reddit_credentials.reddit_username
-reddit_pw = reddit_credentials.reddit_password
+app_name = "sent_analysis_br"
+app_id = "qURatL5KzO7NYjJrehM_uw"
+app_secret = "WQHmtHM_NT0U3DfpHW3IS5XltWTelA"
+app_platform = "script"
+reddit_username = "FlingoLingo_Potato"
+reddit_pw = "Garagem9@"
 USER_AGENT = reddit_credentials.USER_AGENT
-s3_bucket_name = reddit_credentials.s3_bucket
+s3_bucket_name = "emilio-bucketo"
 
 # Create the Reddit instance
 reddit = praw.Reddit(client_id=app_id,
@@ -75,20 +75,20 @@ with open(filename, 'w') as json_file:
 print(f"Data saved as {filename}") 
 
 # Create an S3 client
-s3_client = boto3.client('s3')
+#s3_client = boto3.client('s3')
 
 # Specify the file key
 file_key = 'redditrawdata.json'
 
 # Upload the JSON file to S3
-with open(filename, 'rb') as file:
-    s3_client.put_object(Body=file, Bucket=s3_bucket_name, Key=file_key)
+#with open(filename, 'rb') as file:
+#    s3_client.put_object(Body=file, Bucket=s3_bucket_name, Key=file_key)
 
 # Downloads file
 """ s3_client.download_file('rawredditdata', 'redditrawdata.json', 'redditrawdata.json') """
 
 # Retrieve the file object
-response = s3_client.get_object(Bucket=s3_bucket_name, Key=file_key)
+#response = s3_client.get_object(Bucket=s3_bucket_name, Key=file_key)
 
 # Read the content of the file
-reddit_raw_data = response['Body'].read().decode('utf-8')
+#reddit_raw_data = response['Body'].read().decode('utf-8')
