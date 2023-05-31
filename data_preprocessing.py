@@ -10,9 +10,11 @@ import pol_sub
 # import reddit_streamer
 # raw_data = reddit_streamer.reddit_raw_data
 
-with open('reddit_data.json') as json_file:
-    raw_data = json.load(json_file)
+file_path = '/app/reddit_data.json'
 
+with open(file_path, 'w') as json_file:
+    raw_data = json.load(json_file)
+ 
 raw_data_posts = [raw_data[subreddit] for subreddit in raw_data]
 
 # Removes subreddits and create list of posts

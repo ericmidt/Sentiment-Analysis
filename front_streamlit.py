@@ -39,7 +39,11 @@ additional_stopwords = ["ive", "will", "def", "return", "python", "dont", "u", "
 stopwords = list(stopwords) + additional_stopwords
 
 # Assuming you have a DataFrame named 'df' with a column named 'text'
-df = pd.read_csv('posts_dataframe.csv')
+
+csv_file_path = '/app/posts_dataframe.csv'
+
+df = pd.read_csv(csv_file_path)
+
 # Solve duplicate column bug
 df = df.drop('Unnamed: 0', axis=1)
 all_words = ''.join([str(string) for string in df['Posts']])

@@ -8,6 +8,7 @@ ENV PATH="/venv/bin:$PATH"
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
+COPY pol_sub.py .
 COPY data_preprocessing.py .
 COPY front_streamlit.py .
 

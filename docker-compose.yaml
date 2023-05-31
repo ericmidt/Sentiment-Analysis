@@ -1,16 +1,16 @@
 version: '3'
 services:
-   reddit_streamer:
+  reddit_streamer:
     build:
       context: .
       dockerfile: Dockerfile.reddit_streamer
 
-   data_preprocessing:
+  data_preprocessing:
     build:
       context: .
       dockerfile: Dockerfile.data_preprocessing
 
-   front_streamlit:
+  front_streamlit:
     build:
       context: .
       dockerfile: Dockerfile.front_streamlit
