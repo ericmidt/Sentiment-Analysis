@@ -1,0 +1,19 @@
+version: '3'
+services:
+   reddit_streamer:
+    build:
+      context: .
+      dockerfile: Dockerfile.reddit_streamer
+
+   data_preprocessing:
+    build:
+      context: .
+      dockerfile: Dockerfile.data_preprocessing
+
+   front_streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile.front_streamlit
+    ports:
+      - 8501:8501
+    # Add any additional configuration for the streamlit_app service

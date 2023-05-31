@@ -1,6 +1,6 @@
 import praw
 import json
-import reddit_credentials
+#import reddit_credentials
 import boto3
 
 
@@ -10,7 +10,7 @@ app_secret = "WQHmtHM_NT0U3DfpHW3IS5XltWTelA"
 app_platform = "script"
 reddit_username = "FlingoLingo_Potato"
 reddit_pw = "Garagem9@"
-USER_AGENT = reddit_credentials.USER_AGENT
+USER_AGENT = "windows:" + f"localhost:{app_name}:v1 (by /u/" + reddit_username + ")"
 s3_bucket_name = "emilio-bucketo"
 
 # Create the Reddit instance
