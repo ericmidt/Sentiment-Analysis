@@ -5,7 +5,7 @@ import re
 import pol_sub
 
 # Clear screen to make testing the code easier
-os.system('cls')
+#os.system('cls')
 
 # import reddit_streamer
 # raw_data = reddit_streamer.reddit_raw_data
