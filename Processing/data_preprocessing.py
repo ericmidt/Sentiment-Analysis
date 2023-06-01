@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import re
 import pol_sub
+import time
 
 # Clear screen to make testing the code easier
 #os.system('cls')
@@ -10,9 +11,11 @@ import pol_sub
 # import reddit_streamer
 # raw_data = reddit_streamer.reddit_raw_data
 
-file_path = '/app/reddit_data.json'
-
-with open(file_path, 'w') as json_file:
+file_path = "/app/Shared/reddit_data.json"
+while not os.path.exists(file_path):
+    time.sleep(120)
+    
+with open(file_path, 'r') as json_file:
     raw_data = json.load(json_file)
  
 raw_data_posts = [raw_data[subreddit] for subreddit in raw_data]
@@ -51,7 +54,7 @@ dataframe = pd.DataFrame({
 
 # Add sentiment column. 0: neutral, 1: positive, -1: negative
 #dataframe['sentiment'] = 0
-dataframe.to_csv('posts_dataframe.csv')
+dataframe.to_csv('/app/Shared/posts_dataframe.csv')
 
 # Separate string into a list of words
 # words = raw_data_string.split()

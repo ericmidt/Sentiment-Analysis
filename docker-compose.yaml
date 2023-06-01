@@ -2,18 +2,29 @@ version: '3'
 services:
   reddit_streamer:
     build:
-      context: .
+      context: ./Streaming
       dockerfile: Dockerfile.reddit_streamer
+    volumes:
+      - myvolume:/app/Shared
 
   data_preprocessing:
     build:
-      context: .
+      context: ./Processing
       dockerfile: Dockerfile.data_preprocessing
+    depends_on:
+      - reddit_streamer
+    volumes:
+      - myvolume:/app/Shared
 
   front_streamlit:
     build:
-      context: .
+      context: ./Streamlit
       dockerfile: Dockerfile.front_streamlit
+    depends_on:
+      - data_preprocessing
     ports:
       - 8501:8501
-    # Add any additional configuration for the streamlit_app service
+    volumes:
+      - myvolume:/app/Shared
+volumes:
+  myvolume:

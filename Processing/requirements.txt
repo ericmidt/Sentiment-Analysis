@@ -1,0 +1,9 @@
+pandas
+streamlit
+wordcloud
+matplotlib
+textblob
+python-dotenv
+praw
+boto3
+altair

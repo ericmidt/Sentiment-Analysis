@@ -69,10 +69,10 @@ for subreddit_name in subreddit_names:
             })
         data_dict[subreddit_name] = data_list
 
-filename = 'reddit_data.json'
+filename = '/app/Shared/reddit_data.json'
 with open(filename, 'w') as json_file:
     json.dump(data_dict, json_file, indent=4)  # Pretty print with indent=4
-print(f"Data saved as {filename}") 
+print(f"Data saved at {filename}") 
 
 # Create an S3 client
 #s3_client = boto3.client('s3')

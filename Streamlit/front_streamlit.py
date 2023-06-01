@@ -2,7 +2,9 @@ import pandas as pd
 import streamlit as st
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
-import data_preprocessing
+import time
+import os
+#import data_preprocessing
 
 # Cancel warning in streamlit
 st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -40,7 +42,9 @@ stopwords = list(stopwords) + additional_stopwords
 
 # Assuming you have a DataFrame named 'df' with a column named 'text'
 
-csv_file_path = '/app/posts_dataframe.csv'
+csv_file_path = '/app/Shared/posts_dataframe.csv'
+while not os.path.exists(csv_file_path):
+    time.sleep(120)
 
 df = pd.read_csv(csv_file_path)
 
