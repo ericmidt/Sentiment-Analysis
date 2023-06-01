@@ -7,3 +7,4 @@ python-dotenv
 praw
 boto3
 altair
+flask

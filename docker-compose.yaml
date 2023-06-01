@@ -6,17 +6,19 @@ services:
       dockerfile: Dockerfile.reddit_streamer
     volumes:
       - myvolume:/app/Shared
+    networks:
+    - mynetwork
 
   data_preprocessing:
     build:
       context: ./Processing
       dockerfile: Dockerfile.data_preprocessing
-    depends_on:
-      - reddit_streamer
     ports:
       - 5000:5000
     volumes:
       - myvolume:/app/Shared
+    networks:
+      - mynetwork
 
   front_streamlit:
     build:
@@ -30,3 +32,5 @@ services:
       - myvolume:/app/Shared
 volumes:
   myvolume:
+networks:
+  mynetwork:

@@ -77,13 +77,14 @@ with open(filename, 'w') as json_file:
     json.dump(data_dict, json_file, indent=4)  # Pretty print with indent=4
 print(f"Data saved at {filename}") 
 
-url = "http://localhost:5000/"
+url = "http://data_preprocessing:5000/app/data"
 flask_data = {"filepath": filename}
 response = requests.post(url, json=flask_data)
 
 if response.status_code == 200:
     print("Data sent successfully to the data processing container.")
 else:
+    print(response.status_code)
     print("Error sending data to the data processing container.")
 
 # Create an S3 client
