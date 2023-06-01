@@ -2,7 +2,7 @@ import praw
 import json
 #import reddit_credentials
 import boto3
-
+import requests
 
 app_name = "sent_analysis_br"
 app_id = "qURatL5KzO7NYjJrehM_uw"
@@ -69,10 +69,22 @@ for subreddit_name in subreddit_names:
             })
         data_dict[subreddit_name] = data_list
 
+
+
+
 filename = '/app/Shared/reddit_data.json'
 with open(filename, 'w') as json_file:
     json.dump(data_dict, json_file, indent=4)  # Pretty print with indent=4
 print(f"Data saved at {filename}") 
+
+url = "http://localhost:5000/"
+flask_data = {"filepath": filename}
+response = requests.post(url, json=flask_data)
+
+if response.status_code == 200:
+    print("Data sent successfully to the data processing container.")
+else:
+    print("Error sending data to the data processing container.")
 
 # Create an S3 client
 #s3_client = boto3.client('s3')

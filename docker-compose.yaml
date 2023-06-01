@@ -13,6 +13,8 @@ services:
       dockerfile: Dockerfile.data_preprocessing
     depends_on:
       - reddit_streamer
+    ports:
+      - 5000:5000
     volumes:
       - myvolume:/app/Shared
 
