@@ -75,7 +75,7 @@ for subreddit_name in subreddit_names:
 filename = '/app/Shared/reddit_data.json'
 with open(filename, 'w') as json_file:
     json.dump(data_dict, json_file, indent=4)  # Pretty print with indent=4
-print(f"Data saved at {filename}") 
+    print(f"Data saved at {filename}") 
 
 url = "http://data_preprocessing:5000/app/data"
 flask_data = {"filepath": filename}

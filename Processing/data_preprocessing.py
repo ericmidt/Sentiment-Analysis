@@ -57,7 +57,7 @@ def process_data():
     return "Data processed successfully."
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
     # Separate string into a list of words
     # words = raw_data_string.split()
