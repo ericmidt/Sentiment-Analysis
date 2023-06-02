@@ -79,13 +79,12 @@ with open(filename, 'w') as json_file:
 
 url = "http://data_preprocessing:5000/app/data"
 flask_data = {"filepath": filename}
-response = requests.post(url, json=flask_data)
+response = requests.post(url=url, json=flask_data)
 
 if response.status_code == 200:
     print("Data sent successfully to the data processing container.")
 else:
-    print(response.status_code)
-    print("Error sending data to the data processing container.")
+    print(response.status_code, " Error sending data to the data processing container.")
 
 # Create an S3 client
 #s3_client = boto3.client('s3')

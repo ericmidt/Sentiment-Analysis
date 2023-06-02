@@ -8,3 +8,4 @@ praw
 boto3
 altair
 flask
+requests

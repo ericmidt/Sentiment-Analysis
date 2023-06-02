@@ -5,10 +5,11 @@ import re
 import pol_sub
 import time
 from flask import Flask, request
+import requests
 
 app = Flask(__name__)
 
-@app.route("/api/data", methods=["POST"])
+@app.route('/app/data', methods=["POST"])
 def process_data():
     flask_data = request.json
     file_path = flask_data.get("filepath")
@@ -57,7 +58,7 @@ def process_data():
     return "Data processed successfully."
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)
 
     # Separate string into a list of words
     # words = raw_data_string.split()
