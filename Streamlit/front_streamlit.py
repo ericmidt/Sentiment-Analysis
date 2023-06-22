@@ -4,15 +4,21 @@ from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import time
 import os
-#import data_preprocessing
+
+
+# Read the channel name from the .txt file
+channel_name_file = '/app/Shared/channel_name.txt'
+with open(channel_name_file, 'r') as txt_file:
+    channel_name = txt_file.read().strip()
+
 
 # Cancel warning in streamlit
 st.set_option('deprecation.showPyplotGlobalUse', False)
-st.set_page_config(page_title="Reddit Sentiment Analysis")
-st.title("Reddit Data Sentiment Analysis")
+st.set_page_config(page_title="Youtube Sentiment Analysis")
+st.title(f"Youtube Channel: {channel_name}")
 # Create sidebar
-st.sidebar.header("Options")
-st.sidebar.text("Click one of the buttons to generate:")
+st.sidebar.header("Youtube Channel Sentinment Analysis")
+st.sidebar.subheader("Options")
 
 
 def generate_wordcloud(data, stopwords_list):
@@ -32,7 +38,7 @@ def generate_chart(data):
     st.pyplot()
 
 def generate_dataframe(data):
-    st.title("Data Frame")
+    st.title("Comments Data Frame")
     st.dataframe(data)
     st.pyplot()
 
@@ -50,7 +56,7 @@ df = pd.read_csv(csv_file_path)
 
 # Solve duplicate column bug
 df = df.drop('Unnamed: 0', axis=1)
-all_words = ''.join([str(string) for string in df['Posts']])
+all_words = ''.join([str(string) for string in df['Comments']])
 
 sentiment_data = df["Insight"].value_counts()
 
@@ -60,5 +66,5 @@ if st.sidebar.button("Sentiment Chart"):
 if st.sidebar.button("Word Cloud"):
     generate_wordcloud(all_words, stopwords)
 
-if st.sidebar.button("Data frame"):
+if st.sidebar.button("Comments Data frame"):
     generate_dataframe(df)

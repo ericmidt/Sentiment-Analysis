@@ -1,5 +1,4 @@
 from textblob import TextBlob
-from wordcloud import WordCloud, STOPWORDS
 
 #Create a function to get the subjectivity
 def getSubjectivity(text):

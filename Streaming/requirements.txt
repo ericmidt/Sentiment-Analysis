@@ -1,11 +1,2 @@
-pandas
-streamlit
-wordcloud
-matplotlib
-textblob
-python-dotenv
-praw
-boto3
-altair
-flask
+google-api-python-client
 requests

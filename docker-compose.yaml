@@ -1,9 +1,9 @@
 version: '3'
 services:
-  reddit_streamer:
+  streamer:
     build:
       context: ./Streaming
-      dockerfile: Dockerfile.reddit_streamer
+      dockerfile: Dockerfile.streamer
     volumes:
       - myvolume:/app/Shared
     networks:
