@@ -39,7 +39,7 @@ def load_page():
     # Add button to trigger channel name update
     if st.sidebar.button("Update Channel Name"):
         # Send channel name to the appropriate container
-        url = "http://data_preprocessing:8080/app/data"
+        url = "http://streamer:8080/app/data"
         flask_data = {"channel_name": new_channel_name}
         response = requests.post(url=url, json=flask_data)
 

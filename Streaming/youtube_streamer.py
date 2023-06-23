@@ -9,14 +9,13 @@ app = Flask(__name__)
 
 def get_comments(channel_name):
 
-    api_key = "AIzaSyBr0k4vrmqosOglckneJBoIOVQQ2qezDw8"
+    api_key = "AIzaSyDVfnlpeKf_VCKrBzMbslw-uvGy9HAm7HQ"
 
     # Set up the API client
     youtube = build('youtube', 'v3', developerKey=api_key)
 
     # Get channel ID from custom username
     custom_username = channel_name
-    custom_username = "fireship"
     response = youtube.search().list(part='id', q=custom_username, type='channel').execute()
     total_results = response['pageInfo']['totalResults']
     # If there are no search results for the channel name
@@ -69,7 +68,7 @@ def send_channel_name_to_streamlit(channel_name):
         txt_file.write(channel_name)
         print(f"Channel name saved at {txt_filename}")
 
-    url = "http://data_preprocessing:8501/app/data"
+    url = "http://front_streamlit:8501/app/channel"
     flask_data = {"filepath": txt_filename}
 
     # Send an HTTP POST request with the channel name file
