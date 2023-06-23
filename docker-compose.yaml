@@ -4,6 +4,8 @@ services:
     build:
       context: ./Streaming
       dockerfile: Dockerfile.streamer
+    ports:
+      - 8080:8080
     volumes:
       - myvolume:/app/Shared
     networks:
@@ -22,12 +24,12 @@ services:
     build:
       context: ./Streamlit
       dockerfile: Dockerfile.front_streamlit
-    depends_on:
-      - data_preprocessing
     ports:
       - 8501:8501
     volumes:
       - myvolume:/app/Shared
+    depends_on:
+      - streamer
 volumes:
   myvolume:
 networks:

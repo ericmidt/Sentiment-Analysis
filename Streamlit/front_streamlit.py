@@ -9,11 +9,22 @@ from flask import Flask, request
 
 def load_page():
     # Read the channel name from the .txt file
-    channel_name_file = '/app/Shared/channel_name.txt'
-    with open(channel_name_file, 'r') as txt_file:
-        channel_name = txt_file.read().strip()
 
+    file_path = '/app/Shared/channel_name.json'
 
+    if os.path.exists(file_path):
+
+        channel_name_file = file_path
+
+        with open(channel_name_file, 'r') as json_file:
+
+            channel_name = json_file.read().strip()
+
+    else:
+
+        print("File does not exist.")
+
+    channel_name = " dhuiashdsa "
     # Cancel warning in streamlit
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.set_page_config(page_title="Youtube Sentiment Analysis")
@@ -21,6 +32,22 @@ def load_page():
     # Create sidebar
     st.sidebar.header("YouTube Channel Sentinment Analysis")
     st.sidebar.subheader("Options")
+    
+    # Add input field for channel name
+    new_channel_name = st.sidebar.text_input(label="Enter new YouTube channel name", label_visibility="hidden", placeholder="NewChannelName")
+
+    # Add button to trigger channel name update
+    if st.sidebar.button("Update Channel Name"):
+        # Send channel name to the appropriate container
+        url = "http://data_preprocessing:8080/app/data"
+        flask_data = {"channel_name": new_channel_name}
+        response = requests.post(url=url, json=flask_data)
+
+        if response.status_code == 200:
+            st.sidebar.success("Channel name updated successfully.")
+        else:
+            st.sidebar.error("Error updating channel name.")
+
 
     def generate_wordcloud(data, stopwords_list):
         wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=100, stopwords=stopwords_list).generate(data)
@@ -70,21 +97,7 @@ def load_page():
     if st.sidebar.button("Comments Data frame"):
         generate_dataframe(df)
 
-    # Add input field for channel name
-    new_channel_name = st.sidebar.text_input(label="Enter new YouTube channel name", label_visibility="hidden", placeholder="NewChannelName")
-
-    # Add button to trigger channel name update
-    if st.sidebar.button("Update Channel Name"):
-        # Send channel name to the appropriate container
-        url = "http://streamer:5000/app/channel_update"
-        flask_data = {"channel_name": new_channel_name}
-        response = requests.post(url=url, json=flask_data)
-
-        if response.status_code == 200:
-            st.sidebar.success("Channel name updated successfully.")
-        else:
-            st.sidebar.error("Error updating channel name.")
-
+    
 app = Flask(__name__)
 
 @app.route('/app/channel', methods=["POST"])

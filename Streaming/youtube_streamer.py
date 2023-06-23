@@ -7,9 +7,9 @@ import requests
 
 app = Flask(__name__)
 
-
 def get_comments(channel_name):
-    api_key = "AIzaSyCnByEx-O7VxUiThvWxh8uOkF6rplXWmw0"
+
+    api_key = "AIzaSyBr0k4vrmqosOglckneJBoIOVQQ2qezDw8"
 
     # Set up the API client
     youtube = build('youtube', 'v3', developerKey=api_key)
@@ -69,7 +69,7 @@ def send_channel_name_to_streamlit(channel_name):
         txt_file.write(channel_name)
         print(f"Channel name saved at {txt_filename}")
 
-    url = "http://front_streamlit:5000/app/channel"
+    url = "http://data_preprocessing:8501/app/data"
     flask_data = {"filepath": txt_filename}
 
     # Send an HTTP POST request with the channel name file
@@ -81,22 +81,33 @@ def send_channel_name_to_streamlit(channel_name):
         print(response.status_code, " Error sending channel name to the streamlit container.")
 
 
+def teste():    
+    file_path = '/app/Shared/channel_name.json'
+    if os.path.exists(file_path):
 
-@app.route('/app/channel_update', methods=['POST'])
-def update_channel_name():
-    channel_name = request.json['channel_name']
+        channel_name = request.json
+        file_path = channel_name.get("filepath")
 
-    # Update the channel name in the channel_name.txt file
-    channel_name_file = '/app/Shared/channel_name.txt'
-    with open(channel_name_file, 'w') as txt_file:
-        txt_file.write(channel_name)
+        # Update the channel name in the channel_name.txt file
+        with open(file_path, 'r') as json_file:
+            data =json.load(json_file)
 
-    comments = get_comments(channel_name)
-    if comments == -1:
-        return "Invalid channel name."
+        comments = get_comments(data)
+        if comments == -1:
+            return "Invalid channel name."
+        else:
+            send_comments_to_data_preprocessing(comments)
+            send_channel_name_to_streamlit(data)
+            return 'Channel name updated successfully.'
+
     else:
+        comments = get_comments("fireship")
         send_comments_to_data_preprocessing(comments)
-        send_channel_name_to_streamlit(channel_name)
-        return 'Channel name updated successfully.'
-
-    
+        send_channel_name_to_streamlit("fireship")
+        
+streamer = True
+teste()
+while streamer:
+    @app.route('/app/data', methods=['POST'])
+    def update_channel_name():
+        teste()
