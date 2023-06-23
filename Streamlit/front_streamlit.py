@@ -64,10 +64,10 @@ if st.sidebar.button("Comments Data frame"):
     generate_dataframe(df)
 
 
-channel = st.text_input("Type Youtube Channel:")
+channel = st.sidebar.text_input("Type Youtube Channel:")
 filepath = '/app/Shared/channel_name.txt'
 
-if st.button("Save Channel") and channel:
+if st.sidebar.button("Save Channel") and channel:
 
     with open(filepath, 'w') as file:
         file.write(channel)
