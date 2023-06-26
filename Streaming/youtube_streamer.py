@@ -14,7 +14,7 @@ while True:
 
     print("Channel name found... \nProcessing...")
     # api_key = os.getenv("youtube_api_key")
-    api_key = "AIzaSyBr0k4vrmqosOglckneJBoIOVQQ2qezDw8"
+    api_key = "YOUTUBE_API_KEY"
 
     # Set up the API client
     youtube = build('youtube', 'v3', developerKey=api_key)
