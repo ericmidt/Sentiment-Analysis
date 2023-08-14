@@ -1,2 +1,2 @@
 # Sentiment Analysis Project
-The project involves collecting real-time reddit posts and comments, performing sentiment analysis to determine the sentiment, and visualizing the results in an interactive dashboard. The system will utilize AWS for data storage and processing, Apache Spark for sentiment analysis, Python for data processing and visualization, and SQL for data retrieval and analysis.
+The project involves collecting YouTube comments, performing sentiment analysis to determine the sentiment and most frequent words, and visualizing the results in an interactive dashboard. This project utilized Python, the YouTube API, Streamlit, Flask, Docker and the TextBlob natural language processing library.
