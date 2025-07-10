@@ -2,8 +2,8 @@ version: '3'
 services:
   streamer:
     build:
-      context: ./Streaming
-      dockerfile: Dockerfile.streamer
+      context: ./Extract
+      dockerfile: Dockerfile.extract
     volumes:
       - myvolume:/app/Shared
     networks:
@@ -11,7 +11,7 @@ services:
   data_preprocessing:
     build:
       context: ./Processing
-      dockerfile: Dockerfile.data_preprocessing
+      dockerfile: Dockerfile.data_processing
     ports:
       - 5000:5000
     volumes:
@@ -23,7 +23,7 @@ services:
       context: ./Streamlit
       dockerfile: Dockerfile.front_streamlit
     depends_on:
-      - data_preprocessing
+      - data_processing
     ports:
       - 8501:8501
     volumes:

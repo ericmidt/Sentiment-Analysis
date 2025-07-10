@@ -11,4 +11,4 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 8080
 
-CMD ["python", "youtube_streamer.py"]
+CMD ["python", "youtube_extract.py"]

@@ -1,4 +1,3 @@
-# from dotenv import load_dotenv
 import os
 from googleapiclient.discovery import build
 import json
@@ -14,7 +13,7 @@ while True:
 
     print("Channel name found... \nProcessing...")
     # api_key = os.getenv("youtube_api_key")
-    api_key = "YOUTUBE_API_KEY"
+    api_key = "REMOVED_API_KEY"
 
     # Set up the API client
     youtube = build('youtube', 'v3', developerKey=api_key)
@@ -46,12 +45,12 @@ while True:
         data.extend(comments)
 
     ### Uses a json file to send comments data to the Processing container's API ###
-    filename = '/app/Shared/reddit_data.json'
+    filename = '/app/Shared/youtube_data.json'
     with open(filename, 'w') as json_file:
         json.dump(data, json_file, indent=4)  # Pretty print with indent=4
         print(f"Data saved at {filename}") 
 
-    url = "http://data_preprocessing:5000/app/data"
+    url = "http://data_processing:5000/app/data"
     flask_data = {"filepath": filename}
     response = requests.post(url=url, json=flask_data)
 

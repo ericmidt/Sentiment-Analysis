@@ -6,35 +6,32 @@ import time
 import os
 
 # Cancel warning in streamlit
-st.set_option('deprecation.showPyplotGlobalUse', False)
+#st.set_option('deprecation.showPyplotGlobalUse', False)
 st.set_page_config(page_title="Youtube Sentiment Analysis")
 
 # Create sidebar
-st.sidebar.header("Youtube Channel Sentinment Analysis")
+st.sidebar.header("Youtube Channel Sentiment Analysis")
 st.sidebar.subheader("Options")
-
-# Read the channel name from the .txt file
 
 def generate_wordcloud(data, stopwords_list):
     wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=100, stopwords=stopwords_list).generate(data)
     st.title("Word Cloud")
-    plt.figure(figsize=(10, 5))
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
-    st.pyplot()
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.imshow(wordcloud, interpolation='bilinear')
+    ax.axis('off')
+    st.pyplot(fig)
 
 def generate_chart(data):
     st.title("Sentiment Chart")
-    data.plot(kind='bar')
-    plt.xlabel("Sentiment")
-    plt.ylabel("Number of posts")
-    plt.show()
-    st.pyplot()
+    fig, ax = plt.subplots()
+    data.plot(kind='bar', ax=ax)
+    ax.set_xlabel("Sentiment")
+    ax.set_ylabel("Number of posts")
+    st.pyplot(fig)
 
 def generate_dataframe(data):
     st.title("Comments Data Frame")
     st.dataframe(data)
-    st.pyplot()
 
 stopwords = STOPWORDS
 additional_stopwords = ["ive", "will", "def", "return", "python", "dont", "u", "f"]
@@ -43,25 +40,24 @@ stopwords = list(stopwords) + additional_stopwords
 # Assuming you have a DataFrame named 'df' with a column named 'text'
 
 csv_file_path = '/app/Shared/posts_dataframe.csv'
-while not os.path.exists(csv_file_path):
-    time.sleep(120)
 
-df = pd.read_csv(csv_file_path)
+if os.path.exists(csv_file_path):
+    df = pd.read_csv(csv_file_path)
+    # Solve duplicate column bug
+    df = df.drop('Unnamed: 0', axis=1)
+    all_words = ''.join([str(string) for string in df['Comments']])
+    sentiment_data = df["Insight"].value_counts()
 
-# Solve duplicate column bug
-df = df.drop('Unnamed: 0', axis=1)
-all_words = ''.join([str(string) for string in df['Comments']])
+    if st.sidebar.button("Sentiment Chart"):
+        generate_chart(sentiment_data)
 
-sentiment_data = df["Insight"].value_counts()
+    if st.sidebar.button("Word Cloud"):
+        generate_wordcloud(all_words, stopwords)
 
-if st.sidebar.button("Sentiment Chart"):
-    generate_chart(sentiment_data)
-
-if st.sidebar.button("Word Cloud"):
-    generate_wordcloud(all_words, stopwords)
-
-if st.sidebar.button("Comments Data frame"):
-    generate_dataframe(df)
+    if st.sidebar.button("Comments Data frame"):
+        generate_dataframe(df)
+else:
+    st.info("No data available yet. Please enter a channel and save it to start the process.")
 
 
 channel = st.sidebar.text_input("Type Youtube Channel:")
